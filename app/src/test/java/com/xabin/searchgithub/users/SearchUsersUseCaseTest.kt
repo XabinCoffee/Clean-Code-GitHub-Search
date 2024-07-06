@@ -34,7 +34,7 @@ class SearchUsersUseCaseTest {
     private val QUERY = "query"
 
     private lateinit var endpointTd: EndpointTd
-    private val searchQueryDao = mockk<SearchQueryDao>()
+    private val searchQueryDao = mockk<SearchQueryDao>(relaxUnitFun = true)
 
     lateinit var SUT: SearchUsersUseCase
 

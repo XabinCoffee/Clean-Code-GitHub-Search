@@ -37,7 +37,8 @@ class SearchUsersUseCase @Inject constructor(private val gitHubApi: GitHubApi, p
                     id = user.id,
                     username = user.login,
                     name = user.name,
-                    url = user.url
+                    url = user.url,
+                    avatarUrl = user.avatarUrl
                 )
             )
         }

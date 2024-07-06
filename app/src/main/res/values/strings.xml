@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Search GitHub</string>
+    <string name="search">Search</string>
+    <string name="no_users_found">No users found with that username!</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="public_repos">Public repos</string>
+    <string name="startup_message">Search on GitHub!</string>
 </resources>
