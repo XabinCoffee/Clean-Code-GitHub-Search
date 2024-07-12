@@ -1,4 +1,4 @@
-package com.xabin.searchgithub.screens.profile
+package com.xabin.searchgithub.screens.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

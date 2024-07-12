@@ -1,4 +1,4 @@
-package com.xabin.searchgithub.screens.search
+package com.xabin.searchgithub.screens.search.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

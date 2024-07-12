@@ -1,20 +1,17 @@
-package com.xabin.searchgithub.screens.search
+package com.xabin.searchgithub.screens.search.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,7 +24,6 @@ fun BottomSection(
     loading: Boolean,
     users: List<User>,
     onUserSelected: (String) -> Unit,
-    gridCount: Int,
     page: Int,
     onPageIncrease: () -> Unit,
     onPageDecrease: () -> Unit,
@@ -49,7 +45,7 @@ fun BottomSection(
                 NoUsersFound()
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(gridCount),
+                    columns = GridCells.Adaptive(140.dp),
                     contentPadding = PaddingValues(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -59,7 +55,7 @@ fun BottomSection(
                         items = users,
                         key = { user -> user.id }
                     ) { user ->
-                        UserItem(imageUrl = user.avatarUrl, name = user.name ?: "", modifier = modifier.padding(8.dp), onUserSelected = { /* TODO */ })
+                        UserItem(imageUrl = user.avatarUrl, name = user.username, modifier = modifier.padding(8.dp), onUserSelected = { onUserSelected(user.username) })
                     }
 
 

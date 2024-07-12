@@ -6,4 +6,5 @@
     <string name="following">Following</string>
     <string name="public_repos">Public repos</string>
     <string name="startup_message">Search on GitHub!</string>
+    <string name="network_error">A network error has occurred, check your connection or try again later.</string>
 </resources>

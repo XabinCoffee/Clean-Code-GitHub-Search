@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.xabin.searchgithub.screens.Route
 import com.xabin.searchgithub.screens.ScreensNavigator
+import com.xabin.searchgithub.screens.profile.ProfileScreen
 import com.xabin.searchgithub.screens.search.SearchScreen
 
 
@@ -70,10 +72,11 @@ private fun MainScreenContent(
     val parentNavController = rememberNavController()
     screensNavigator.setNavController(parentNavController)
 
+    var showStartup by rememberSaveable { mutableStateOf(true) }
+
     Surface(
         modifier = Modifier
-            .padding(padding)
-            .padding(horizontal = 12.dp),
+            .padding(padding),
     ) {
         NavHost(
             modifier = Modifier.fillMaxSize(),
@@ -84,10 +87,9 @@ private fun MainScreenContent(
         ) {
             composable(route = Route.SearchScreen.routeName) {
                 SearchScreen(
-                    showStartup = false,
-                    onSearchInteraction = {  },
-                    screensNavigator = screensNavigator,
-                    isPortrait = false
+                    showStartup = showStartup,
+                    onSearchInteraction = { showStartup = false },
+                    screensNavigator = screensNavigator
                 )
             }
 
@@ -95,6 +97,11 @@ private fun MainScreenContent(
                 val username = remember {
                     (screensNavigator.currentRoute.value as Route.ProfileScreen).username
                 }
+
+                ProfileScreen(
+                    username = username,
+                    screensNavigator = screensNavigator
+                )
 
             }
         }

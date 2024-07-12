@@ -15,13 +15,17 @@ class SearchUsersUseCase @Inject constructor(private val gitHubApi: GitHubApi, p
 
     suspend fun searchUsers(query: String) = withContext(Dispatchers.IO) {
         if (query != "") {
-            val response = gitHubApi.searchUsers(query)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    searchQueryDao.upsert(SearchQuery(query, System.currentTimeMillis()))
-                    users = convertUserSchemaListToUserList(it.items)
-                    return@withContext users
+            try {
+                val response = gitHubApi.searchUsers(query)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        searchQueryDao.upsert(SearchQuery(query, System.currentTimeMillis()))
+                        users = convertUserSchemaListToUserList(it.items)
+                        return@withContext users
+                    }
                 }
+            } catch (e: Exception) {
+                throw e
             }
         }
         emptyList()

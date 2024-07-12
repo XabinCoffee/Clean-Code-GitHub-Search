@@ -2,6 +2,7 @@ package com.xabin.searchgithub.helper
 
 
 import com.xabin.searchgithub.networking.GitHubApi
+import com.xabin.searchgithub.networking.repositories.RepositorySchema
 import com.xabin.searchgithub.networking.users.UserSchema
 import com.xabin.searchgithub.networking.users.UserSearchSchema
 import com.xabin.searchgithub.testdata.UsersTestData
@@ -36,6 +37,30 @@ class EndpointTd: GitHubApi {
             )
         }
         return Response.success(UsersTestData.getUserSchemas().first())
+    }
+
+    override suspend fun getFollowers(username: String): Response<List<UserSchema>> {
+        mTimesCalled++
+        if (mFailure) {
+            return Response.error(
+                400,
+                "{\"key\":[\"somestuff\"]}"
+                    .toResponseBody("application/json".toMediaTypeOrNull())
+            )
+        }
+        return Response.success(UsersTestData.getUserSchemas())
+    }
+
+    override suspend fun getRepos(username: String): Response<List<RepositorySchema>> {
+        mTimesCalled++
+        if (mFailure) {
+            return Response.error(
+                400,
+                "{\"key\":[\"somestuff\"]}"
+                    .toResponseBody("application/json".toMediaTypeOrNull())
+            )
+        }
+        return Response.success(UsersTestData.getRepositorySchemas())
     }
 
 

@@ -1,5 +1,6 @@
 package com.xabin.searchgithub.screens.search
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -7,13 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.xabin.searchgithub.screens.Route
 import com.xabin.searchgithub.screens.ScreensNavigator
+import com.xabin.searchgithub.screens.search.components.BottomSection
+import com.xabin.searchgithub.screens.search.components.SearchBar
 
 
 @Composable
@@ -21,10 +23,14 @@ fun SearchScreen(
     showStartup: Boolean,
     onSearchInteraction: () -> Unit,
     screensNavigator: ScreensNavigator,
-    isPortrait: Boolean,
     searchViewModel: SearchViewModel = hiltViewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    searchViewModel.errorMessage?.let {
+        Toast.makeText(LocalContext.current, it, Toast.LENGTH_LONG).show()
+        searchViewModel.resetErrorMessage()
+    }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.height(16.dp))
@@ -52,8 +58,7 @@ fun SearchScreen(
             onPageDecrease = { searchViewModel.currentPage-- },
             onUserSelected = { login: String ->
                 screensNavigator.toRoute(Route.ProfileScreen(login))
-            },
-            gridCount = if (isPortrait) 2 else 4,
+            }
         )
 
         Spacer(Modifier.height(16.dp))
