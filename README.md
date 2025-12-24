@@ -11,3 +11,7 @@ This sample app is built using these Android development practices and tools:
 
 * Search for GitHub users.
 * View a list of a user's public repositories and their followers.
+
+![alt text](Screenshot_20251224_115002.png)
+![alt text](Screenshot_20251224_115015.png)
+![alt text](Screenshot_20251224_114950.png)
