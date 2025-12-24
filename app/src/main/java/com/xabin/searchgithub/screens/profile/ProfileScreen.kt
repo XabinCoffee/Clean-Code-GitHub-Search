@@ -1,7 +1,6 @@
 package com.xabin.searchgithub.screens.profile
 
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -28,6 +27,7 @@ import com.xabin.searchgithub.screens.common.components.ElementSection
 import com.xabin.searchgithub.screens.profile.components.RepoItem
 import com.xabin.searchgithub.screens.profile.components.ScrollableFollowerRow
 import com.xabin.searchgithub.screens.profile.components.UserCard
+import androidx.core.net.toUri
 
 
 @Composable
@@ -69,7 +69,7 @@ fun ProfileScreen(
                     imageUrl = profileViewModel.user!!.avatarUrl,
                     name = profileViewModel.user!!.name ?: "--",
                     login = profileViewModel.user!!.username,
-                    bio = profileViewModel.user!!.bio ?: "",
+                    bio = profileViewModel.user!!.bio,
                     followers = profileViewModel.user!!.followers,
                     following = profileViewModel.user!!.following,
                     publicRepos = profileViewModel.user!!.publicRepos,
@@ -112,7 +112,8 @@ fun ProfileScreen(
                         name = repo.name,
                         description = repo.description,
                         language = repo.language,
-                        onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(repo.htmlUrl))) },
+                        onClick = { context.startActivity(Intent(Intent.ACTION_VIEW,
+                            repo.htmlUrl.toUri())) },
                         modifier = Modifier.padding(horizontal = 18.dp)
                     )
                 }

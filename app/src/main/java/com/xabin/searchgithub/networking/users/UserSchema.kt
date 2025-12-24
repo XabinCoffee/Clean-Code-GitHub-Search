@@ -1,6 +1,7 @@
 package com.xabin.searchgithub.networking.users
 
 import com.google.gson.annotations.SerializedName
+import com.xabin.searchgithub.users.User
 import java.util.Date
 
 data class UserSchema(
@@ -36,4 +37,19 @@ data class UserSchema(
     @SerializedName("following") var following: Int = 0,
     @SerializedName("created_at") var createdAt: Date = Date(),
     @SerializedName("updated_at") var updatedAt: Date = Date()
-)
+) {
+
+    fun toDomain(): User = User(
+        id = id,
+        username = login,
+        name = name,
+        url = url,
+        avatarUrl = avatarUrl,
+        bio = bio ?: "",
+        followers = followers,
+        following = following,
+        publicRepos = publicRepos
+
+    )
+
+}

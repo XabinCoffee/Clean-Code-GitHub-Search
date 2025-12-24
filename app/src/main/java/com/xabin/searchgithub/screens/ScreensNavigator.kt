@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class ScreensNavigator {
 
-    private val scope = CoroutineScope(Dispatchers.Main.immediate)
-
     private lateinit var navController: NavHostController
 
     private var navControllerObserveJob: Job? = null
@@ -30,7 +28,5 @@ class ScreensNavigator {
         navController.navigate(route.navCommand)
         currentRoute.value = route
     }
-
-
 
 }

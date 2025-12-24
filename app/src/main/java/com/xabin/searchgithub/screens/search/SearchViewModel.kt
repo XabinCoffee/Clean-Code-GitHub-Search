@@ -11,13 +11,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xabin.searchgithub.R
 import com.xabin.searchgithub.networking.GitHubApi
-import com.xabin.searchgithub.users.SearchUsersUseCase
+import com.xabin.searchgithub.users.usecase.SearchUsersUseCase
 import com.xabin.searchgithub.users.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,7 +22,11 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(@ApplicationContext private val application: Context, val gitHubApi: GitHubApi, val searchUsersUseCase: SearchUsersUseCase): ViewModel() {
+class SearchViewModel @Inject constructor(
+    @ApplicationContext private val application: Context,
+     val gitHubApi: GitHubApi,
+     val searchUsersUseCase: SearchUsersUseCase
+) : ViewModel() {
 
     private val USERS_PER_PAGE = 20
 
@@ -51,7 +52,7 @@ class SearchViewModel @Inject constructor(@ApplicationContext private val applic
             delay(1000)
             searchUsers.clear()
             try {
-                val users = searchUsersUseCase.searchUsers(query = searchText)
+                val users = searchUsersUseCase(searchText)
                 searchUsers.addAll(users)
             } catch (e: UnknownHostException) {
                 errorMessage = application.getString(R.string.network_error)
@@ -66,6 +67,4 @@ class SearchViewModel @Inject constructor(@ApplicationContext private val applic
     fun resetErrorMessage() {
         errorMessage = null
     }
-
-
 }

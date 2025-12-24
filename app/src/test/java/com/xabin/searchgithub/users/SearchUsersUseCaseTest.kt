@@ -2,29 +2,20 @@ package com.xabin.searchgithub.users
 
 import com.xabin.searchgithub.common.database.SearchQueryDao
 import com.xabin.searchgithub.helper.EndpointTd
-import com.xabin.searchgithub.networking.GitHubApi
-import com.xabin.searchgithub.networking.users.UserSchema
-import com.xabin.searchgithub.networking.users.UserSearchSchema
 import com.xabin.searchgithub.testdata.UsersTestData
-import io.mockk.awaits
+import com.xabin.searchgithub.users.usecase.SearchUsersUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
-import io.mockk.verify
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Response
 
 
 
@@ -55,7 +46,7 @@ class SearchUsersUseCaseTest {
         runTest {
             // Arrange
             // Act
-            SUT.searchUsers(QUERY)
+            SUT(QUERY)
             // Assert
             Assert.assertEquals(1, endpointTd.mTimesCalled)
         }
@@ -66,7 +57,7 @@ class SearchUsersUseCaseTest {
         runTest {
             // Arrange
             // Act
-            SUT.searchUsers("")
+            SUT("")
             // Assert
             Assert.assertEquals(0, endpointTd.mTimesCalled)
         }
@@ -78,7 +69,7 @@ class SearchUsersUseCaseTest {
             // Arrange
             success()
             // Act
-            val users = SUT.searchUsers(QUERY)
+            val users = SUT(QUERY)
             // Assert
             Assert.assertEquals(USERS, users)
         }
@@ -90,7 +81,7 @@ class SearchUsersUseCaseTest {
             // Arrange
             failure()
             // Act
-            val users = SUT.searchUsers(QUERY)
+            val users = SUT(QUERY)
             // Assert
             Assert.assertEquals(emptyList<User>(), users)
         }
@@ -103,7 +94,7 @@ class SearchUsersUseCaseTest {
             success()
             coEvery { searchQueryDao.upsert(any()) } just runs
             // Act
-            SUT.searchUsers(QUERY)
+            SUT(QUERY)
             // Assert
             coVerify { searchQueryDao.upsert(any()) }
         }

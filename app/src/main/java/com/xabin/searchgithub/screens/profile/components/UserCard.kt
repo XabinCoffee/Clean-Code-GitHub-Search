@@ -93,5 +93,5 @@ fun UserCard(
 @Preview(showBackground = true, backgroundColor = 0x000000)
 @Composable
 fun UserItemPreview() {
-    SearchGitHubTheme { UserCard(imageUrl = "http://via.placeholder.com/400", name = "Xabin Rodriguez", login = "XabinCoffee", bio = "Hello I like filling little text fields", followers = 9, following = 7, publicRepos = 11) }
+    SearchGitHubTheme { UserCard(imageUrl = "http://via.placeholder.com/400", name = "Xabin Rodriguez", login = "XabinCoffee", bio = "Hello I like filling little text fields", followers = 5, following = 7, publicRepos = 11) }
 }

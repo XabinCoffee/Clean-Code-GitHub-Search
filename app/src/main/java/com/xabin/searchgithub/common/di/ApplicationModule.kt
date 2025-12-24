@@ -39,7 +39,6 @@ class ApplicationModule {
             .build()
     }
 
-
     @Provides
     @Singleton
     fun appRoomDatabase(application: Application): AppRoomDatabase {
